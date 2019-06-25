@@ -8,3 +8,21 @@ function CreatePerson(name,age,job){
     }
 }
 
+//原型模式
+function Person(){}
+Person.prototype.name="zhangkunlun";
+Person.prototype.age="22";
+Person.prototype.job="softWare Engineer";
+Person.prototype.sayName=function(){
+    alert(this.name);
+}
+
+var person1=new Person();
+person1.sayName();
+
+class Person {
+    constructor() { }//构造函数
+    sayName() {
+        alert(this.name);
+    }
+}
