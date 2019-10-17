@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title></title>
+<title>vue</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!--
 <script  type="text/javascript" src="vue_1.vue"></script>
@@ -14,6 +14,10 @@
 		<p v-bind:title="message_app2">鼠标悬停</p>
 		<p v-if="seen">是否显示</p>
 		
+		<button v-on:click="reverseMessage">反转消息</button>
+		
+		<p>{{message_2}}</p>
+		<input v-model="message_2">
 		<!--v-for要配合ol和li使用
 		<p v-for="todo in todos"></p>
 		-->
@@ -30,12 +34,18 @@
 		  data: {
 		    message: 'Hello Vue!',
 			message_app2:'鼠标悬停title',
+			message_2:'',
 			seen:true,
 			todos: [
 			  { text: '亮亮' },
 			  { text: '多多' },
 			  { text: '小灵子' }
 			]
+		  },
+		  methods:{
+			  reverseMessage:function(){
+			  	this.message=this.message.split('').reverse().join('');
+			  }
 		  }
 		})
 	</script>

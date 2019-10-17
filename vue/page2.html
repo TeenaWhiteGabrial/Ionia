@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	<body>
+		<div id='Total'>
+			<p id='#Title' v-bind:title="message_2">已经提交的内容：</p>
+			<div id='#ShowTel'>{{ message }}</div>
+			<input id='#input1' v-model="inputMessage">
+			<button id='#button1' v-on:click="Submit">提交数据</button>
+		</div>
+
+		
+		<script>
+			var vm=new Vue({
+				el:'#Total',
+				data:{
+					message:'',
+					message_2:'',
+					inputMessage:'',
+					
+				},
+				methods:{
+					Submit:function(){
+						this.message=this.inputMessage;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
