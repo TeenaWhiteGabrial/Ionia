@@ -1,0 +1,27 @@
+1，var a= new foo()，在这一过程中，New做了什么？
+	* 
+    创建一个空对象；
+        * 
+    给他一个_proto__属性并指向构造函数的原型对象；
+        * 
+    执行构造函数中的方法（为其添加属性）
+        * 
+    返回这个对象；
+
+
+    Code:
+    function Person (name) {
+        this.name=name;
+    }
+    
+    function NewFunc (name){
+        var obj={};
+        obj._proto_=Person.prototype;
+        obj.call(obj,name);
+        return obj;
+    }
+2，apply和call的含义；
+    执行对象中的所有内容，apply的参数是对象+数组，call的参数是对象+n个参数
+3，_proto_和prototype的含义；
+    prototype是显式原型，用于实现原型的继承和属性的共享。
+    _proto_是隐式原型，用于构成原型链，实现原型的继承。
