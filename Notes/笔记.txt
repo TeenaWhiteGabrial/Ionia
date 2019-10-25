@@ -1,12 +1,10 @@
 1，var a= new foo()，在这一过程中，New做了什么？
-	* 
-    创建一个空对象；
-        * 
-    给他一个_proto__属性并指向构造函数的原型对象；
-        * 
-    执行构造函数中的方法（为其添加属性）
-        * 
-    返回这个对象；
+
+	描述
+        (1),创建一个空对象；
+        (2),给他一个_proto__属性并指向构造函数的原型对象；
+        (3),执行构造函数中的方法（为其添加属性）
+        (4),返回这个对象；
 
 
     Code:
@@ -20,8 +18,88 @@
         obj.call(obj,name);
         return obj;
     }
-2，apply和call的含义；
-    执行对象中的所有内容，apply的参数是对象+数组，call的参数是对象+n个参数
+2，apply、call、bind
+    执行对象中的所有内容，apply的参数是对象+数组，call的参数是对象+n个参数；
+    另一种解释：改变函数的this对象的指向，第一个参数都是this要指向的对象，可以利用后续参数传参
+
+    总结：通过call,apply,bind，可以使用另一个对象中的方法+本对象中的属性。
+        例子：
+        var Obj1={
+            a:'1',
+            b:'2',
+            NewFunc:function(c){
+                console.log(a+b+c);
+            }
+        }
+
+        var Obj2={
+            a:'3',
+            b:'4'
+        }
+
+        Obj1.NewFunc.call(Obj2,'3')
+    应用：在绑定onselect的方法时，覆盖了平台默认绑定的事件方法。通过以下方法解决：
+        var oldSelectEvents=$('#XDVoucherAttach').datagrid('options').onselect;//存储原有的方法
+        $('XDVoucherAttach').onselect=function(){};//绑定新方法
+        oldSelectEvents.apply(this,[rowIndex,rowData]);
+
+
 3，_proto_和prototype的含义；
     prototype是显式原型，用于实现原型的继承和属性的共享。
     _proto_是隐式原型，用于构成原型链，实现原型的继承。
+
+    JavaScript规定，
+        每一个函数都有一个prototype对象属性，指向另一个对象；
+        JS在创建对象的时候，都有一个叫做proto的内置属性，用于指向创建它的构造方法的原型对象；
+
+    例如： 
+        function Person(){}
+        var p=new Person();
+
+        console.log(p.constructor==Person);//true,实例对象的constructor属性值为其构造函数;
+        
+        _proto_与prototype之间的关系：
+        var obj={}；
+        console.log(obj._proto_===Object.prototype)//输出true
+
+        
+
+
+4,let和var定义的变量的区别
+    (1),let用于块级作用域，var没有块级作用域的概念;
+    (2),var有变量提升的用法，let没有，但是都有预编译的过程;
+    (3),let不能重复命名，var可以重复命名;
+    
+5,闭包，
+    访问函数作用域中的变量。
+    函数可以当做作为函数返回值传递；
+
+    闭包和作用域：
+        函数的执行依赖于变量作用域，这个作用域是在函数定义时决定的，而不是函数调用时决定的。
+        对比：this绑定与函数声明时的位置无关，只取决于函数的调用位置（在ES6之前）
+        call、apply、bind可以改变this的指向
+    举例：
+        function func1(){
+            var a='1';
+            return function(){
+                console.log(a);
+            }
+        }
+
+        var func2=funca();
+        a='2';
+
+        func2();//输出，1
+
+6，作用域和作用域链
+    函数执行时的执行环境，能够访问到的变量和函数；
+    全局作用域，函数作用域，块级作用域(ES6新增，使用let 和 const限制);
+    
+    作用域分层，当某个变量在当前作用域找不到时，会向上层作用域查找。查找的过程是顺着作用域链
+    
+7，this关键字
+    this关键字总是指向函数被调用时的对象;
+
+
+
+
