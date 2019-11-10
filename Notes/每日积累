@@ -1,0 +1,158 @@
+1，实现继承的5种方式
+    （1），使用原型链继承，子类构造方法的原型指向父类构造方法的实例，缺点是父类中引用类型的属性会被共享；
+    （2），借用构造方法继承，在子类型构造函数中调用父类型构造函数，并将this指向子类的new出来的对象上，实际上是每次都将父类方法实例化一次
+        缺点是父类中相同方法也需要被创建多次，浪费内存，且子类访问不到父类原型的属性和方法了。
+    （3），组合继承，结合了原型链继承和构造方法继承两种方式。先使用构造方法继承，再将子类构造方法的原型指向父类构造方法的实例;
+        存在的问题，此时子类的constructor不再是自身的构造函数了；
+    （4），经典继承，利用Object.create()方法，用法：object.create(animal,{name:{value:"猫咪",writable:true}})，缺点同使用原型链继承，实例间会被共享；
+    （5），寄生组合式继承，在组合继承的基础上，不再直接将子类构造方法的原型指向父类构造方法的实例，而是指向父类构造方法的原型创建的一个副本;
+2，在JS中arguments对象的理解
+    （1）arguments对象实际上是所在函数的内置类数组对象；
+    （2）每个函数都有arguments属性，表示函数的实参集合。arguments不是数组而是一个对象，但是和数组很相似，所以称之为类数组对象。不能显式的创建，只有在函数开始时才可用；
+    （3）arguments的属性，length：表示实参的数量；callee:引用函数自身，可以实现匿名函数的递归；Symbol迭代器
+    （4）arguments可以检测到参数的个数，用来实现函数重载;
+3，判断数据类型的方法
+    （1）typeof 123:，"number"。
+        适用于Number，String,Boolean,Function,undefined;
+        不适用于Array,Object,Null,Date,RegExp,Error,都会被判断为Object
+    （2）instanceof：判断在其原型链上是否存在这一个构造函数的prototype属性，但是判断不了，Number、string、Boolean的类型（使用new Number()方法新建的可以判断出来）。
+        检测构造函数的prototype属性是否在实例的原型链上。语法：Object instanceof Contructor
+    （3）tostring：Object的原型方法，调用该方法默认返回当前对象的Class,这是一个内部属性。用法：Object.tostring，Object.prototype.call('123')//返回结果：Object 适用于Number，String
+    （4）使用原型中的construct属性（原型中的constructor属性指向构造函数），判断不了null、undefined，因为他们没有constructor
+4,Ajax的原生写法
+    var xhr=window.XMLHttpRequest?new XMLHttpRequest():ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('get',url,true);
+    xhr.send();
+    xhr.onreadystatechange=()=>{
+        if(xhr.readystate==4){
+            if(xhr.status=200){
+                var data=xhr.responseTEXT;
+                return data;
+            }
+        }
+    }
+5,对象深拷贝、浅拷贝
+    对象浅拷贝是指对于对象地址的复制，没有开辟新的栈；
+    对象深拷贝的方法：
+        （1）JSON.stringify/parse的方法
+            JSON.stringify,JSON序列化，将对象序列化为字符串；
+            JSON.parse,JSON反序列化，将字符串反序列化为JSON对象；
+            存在的问题：function类型的属性无法被正常序列化;
+        （2）使用递归方法，对每一层数据都实现一次创建对象、对象赋值的操作。可以深拷贝疏忽组、对象、以及带函数的对象
+            function DeepClone(item){
+                const target = item.constructor === Array?[]:{};//判断复制的目标是对象还是数组
+                for(let keys in item){
+                    if(item.hasOwnProperty(keys)){
+                        if(item[keys]&&typeof item[keys] ==='object'){//如果值是对象，就递归一下
+                            target[keys]=item[keys].constructor === Array?[]:{};
+                            target[keys]=DeepClone(item);
+                        }else{
+                            target[keys]=item[keys]
+                        }
+                    }
+                }
+
+                return target;
+            }
+        （3）对于数组来说，还可以有：ES6的Array.from()、[...Array]、concat、selice、等，但是都只能实现第一层的拷贝
+6，图片懒加载和预加载
+    图片懒加载：先将图片的src设定为一张简单的loading图片，真实的src设定为一个自定义属性中（data-src），等到图片元素进入到可视窗口的时候，再更新src值;
+    图片预加载：浏览器会缓存请求过的图片，基于此，在还不需要加载图片的时候下载图片缓存起来不可见，等到需要的时候再去加载；
+7，实现页面加载进度条
+    （1）要素：
+        JQuery中的$.loading()以及$.loaded();
+        document.onreadystatechange事件用来监听加载的状态变化；
+        document.readystate,页面当前文档的状态，
+            uninitialized,还未开始载入；
+            loading，载入中；
+            interactive，已载入，文档和用户可以开始交互；
+            complete，载入完成；
+    （2）实现百分比加载，待补充；
+8，this关键字,表示当前执行代码的环境对象，可以分为全局环境和函数环境；
+    （1）在函数内部，this的取值取决于函数被调用时的运行环境。this对象指向的是函数当前的执行环境对象，执行环境是会在事件循环过程中变化的，因此this在函数环境中是属于运行时的。
+        例：
+        var name="Tom";
+        var obj={
+            name:"iceburg",
+            say:function(){
+                alert(this.name);
+            }
+            sub:{
+                say:function(){
+                    alert(this.name);
+                }
+            }
+        }
+
+        obj.say();//输出iceburg;
+        obj.sub.say();//输出undefined
+        var say=obj.say();
+        say();//输出Tom;
+    （2）事件回调函数
+        当函数被当做事件触发的回调函数执行时，this是指向该触发事件对应的元素。
+        例如：
+            var handle={
+                name:"Tom",
+                register:function(){
+                    console.log(this.name);
+                }
+            }
+
+        $('#registerBtn').on('click',handle.register);//输出undefined
+        要想实现输出Tom,可以使用bind方法。
+        $('#registerBtn').on('click',handle.register.bind(handle));
+        若是使用箭头函数，则无需使用bind。箭头函数中的this本就是对应定义时所在的对象；
+    （3）构造函数
+        在构造函数中this指向的是其实例对象，可参考使用new命令实例化构造函数A的过程中会发生什么。
+    （4）bind，更改函数体中的this指向，并返回一个新的函数；
+    （5）call和apply，变更函数中的this指向，可附带参数列表。apply是以参数数组的形式
+
+9，函数式编程
+
+10，函数柯里化，就是将低阶函数转化为高阶函数。是一种预加载函数的能力，是一种对参数的缓存
+    例如：function(x,y){
+            return x+y;
+        }柯里化之后，变为：
+        function(x){
+            return function(y){
+                x+y;
+            }
+        }
+
+11，手动实现parseInt
+    function _parseInt(str,radix){
+            var res = 0;
+            if(typeof str !="string" && typeof str !="number"){
+                return NaN;
+            }
+            str =String(str).trim().split(".")[0];//String.trim(),trim的作用是截取中间的非空白字符，作为一个New出来的对象存储在heap内存中（堆内存）
+
+            let len = str.length;
+            if(!len){
+                return NaN;
+            }
+            if(!radix){
+                return radix = 10;
+            }
+            if(typeof radix !=="number" || radix < 2 || radix >36){
+                return NaN;
+            }
+            for(let i = 0; i < len; i++){
+                let arr = str.split("");//split，截取字符串为数组。
+                res += Math.floor(arr[i])*Math.pow(radix,i)//Math.floor,向下取整。有将字符串转化为Number的功能
+            }
+            return res;
+        }
+12，同源策略：如果两个页面的协议、域名、端口都相同，则两个页面具有相同的源。非同源的两个页面之间发送Ajax请求会被浏览器拦截。
+    同源策略的限制：
+        （1），Cookie、LocalStorage和IndexDB无法读取;
+        （2），DOM无法获得;
+        （3），AJAX请求不能发送;
+
+13,判断两个对象是否相等，先判断内存地址是否相等，再使用递归对每个属性进行判断;
+14,事件委托、代理。
+    实现方法：addEventListener(type,listener,userCapture);//userCapture用来表示是在捕获阶段触发(true)，还是在冒泡阶段触发(false),默认为false。
+    事件委托的优点：
+        （1），提高性能，每一个哈函数都会占用内存空间，只需添加一个事件处理程序代理所有时间，所占用的内存空间更少。
+        （2），动态监听，使用事件委托可以自动绑定动态添加的元素，即新增的节点不需要主动添加也可以一样具有和其他元素一样的事件。
+

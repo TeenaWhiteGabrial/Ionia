@@ -28,7 +28,7 @@
             a:'1',
             b:'2',
             NewFunc:function(c){
-                console.log(a+b+c);
+                console.log(this.a+this.b+c);
             }
         }
 
