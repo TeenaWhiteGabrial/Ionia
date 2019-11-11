@@ -153,6 +153,33 @@
 14,事件委托、代理。
     实现方法：addEventListener(type,listener,userCapture);//userCapture用来表示是在捕获阶段触发(true)，还是在冒泡阶段触发(false),默认为false。
     事件委托的优点：
-        （1），提高性能，每一个哈函数都会占用内存空间，只需添加一个事件处理程序代理所有时间，所占用的内存空间更少。
+        （1），提高性能，每一个函数都会占用内存空间，只需添加一个事件处理程序代理所有时间，所占用的内存空间更少。
         （2），动态监听，使用事件委托可以自动绑定动态添加的元素，即新增的节点不需要主动添加也可以一样具有和其他元素一样的事件。
-
+15,window.onload和domcontentloaded
+    window.onload,页面上所有的DOM、样式表、脚本、图片等等都已经加载完成了；
+    domcontentloaded,页面上的DOM加载完成。
+16,浏览器页面加载渲染过程（拿到HTML文件之后的操作）
+    （1）   构建DOM树。读取HTML文档，将byte转化为字符，转化为tokens（标签）、转化为节点、以节点构建DOM树；
+            构建CSSOM树。
+            加载JS。在构建DOM树的过程中，如果遇到了JS，则会阻塞DOM树的构件，初衷是为了提高性能，减少不必要的DOM创建。
+    （2），构建渲染树，由DOM树和CSSOM合并构建。计算每个可见元素的布局，输出到绘制流程，将像素渲染到屏幕上。
+    （3）重绘，屏幕的一部分重绘，但是节点的空间位置和大小并不发生变化;
+        重排，渲染树的节点发生变化，重新生成渲染树，重新布局。当节点的大小和空间位置发生改变时触发重排（添加删除节点、更改位置、更改尺寸等）
+17,for in迭代和for of迭代的区别
+    （1）for in取key,可以用于数组和对象属性的遍历，主要是为了遍历对象。
+    （2）for of取value，可以用于数组的遍历、类数组对象、字符串、Set、Map、iterator对象等;
+    （3）foreach，遍历数组，但是不能使用break中断循环、也不能使用return 返回到外层函数。
+18,原生实现bind
+19,async/await，ES6的语法
+    aysnc,声明一个异步函数，在异步的处理上，是generator的语法糖;
+    await,每到一个await的时候，程序需要等待执行后面的程序。await只能在async里面用，后面的语句可以是对象、数字、字符串等等
+20，generator函数和yield表达式
+    （1）generator函数是ES6提供的一种异步编程解决方案，特点如下：
+        1),generator函数在function和函数名之间有一个*,在function的右上角;
+        2),generator函数的返回是一个Iterator对象,直接运行generator函数并不会立即运行;
+        3),generator函数内部可以使用yield表达式，定义不同的状态;
+        4),可以依次使用.next方法，遍历Generator函数内部的每一个状态。
+    （2）yield表达式，定义状态，暂停执行，yield本身并没有返回值；
+    （3）yield*表达式，用来在Generator函数里面调用另一个Generator函数;
+    （4）next()方法的参数，yield本身并没有返回值，总是undefined，可以在next方法中传参用来表示上一个yield表达式的返回值。
+21,立即执行函数和使用场景
