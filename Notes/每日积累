@@ -183,3 +183,32 @@
     （3）yield*表达式，用来在Generator函数里面调用另一个Generator函数;
     （4）next()方法的参数，yield本身并没有返回值，总是undefined，可以在next方法中传参用来表示上一个yield表达式的返回值。
 21,立即执行函数和使用场景
+    立即执行函数就是立即执行(function(){.....})(),好处是隔离作用域，可以在插件中使用，可以与闭包配合使用。
+22,前端常用的设计模式
+    （1）单例模式：保证一个类只有一个实例，提供一个访问它的全局访问点。
+            需求：一些对象我们往往只需要一个，比如线程池、全局缓存、浏览器中的window对象、登录浮窗等。
+            实现：用一个变量标识当前是否为某个类创建过对象，如果是，则在下一次获取这个类的实例时，直接返回之前创建的对象。
+            优点：
+                1)可以用来划分命名空间，减少全局变量的数量。
+                2)可以被实例化，且实例化一次之后，再次实例化生成的也是第一个实例。
+            代码：
+                var Singleton=function(name){
+                    this.name=name;
+                    this.instance=null;
+                }
+
+                Single.prototype.getName=function(){
+                    return this.name;
+                }
+
+                Single.getSingle=function(name){
+                    if(!this.instance){
+                        this.instance=new Singleton(name);
+                    }
+                    return this.instance;
+                }
+
+                var SingleA=Single.getSingle("aaa");
+                var SingleB=Single.getSingle("bbb");
+    （2）观察者模式：对象间的一对多的依赖关系。
+            需求：当一个对象的状态发生变化时，所有依赖于他的对象都将得到通知
