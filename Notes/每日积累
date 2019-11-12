@@ -211,4 +211,18 @@
                 var SingleA=Single.getSingle("aaa");
                 var SingleB=Single.getSingle("bbb");
     （2）观察者模式：对象间的一对多的依赖关系。
-            需求：当一个对象的状态发生变化时，所有依赖于他的对象都将得到通知
+            需求：当一个对象的状态发生变化时，所有依赖于他的对象都将得到通知；
+23,iframe的缺点
+    （1）
+24,数组问题
+    （1）数组去重：
+        1).先使用Array.sort()将数组排序，再比较相邻的两个元素，如果不相同则去除掉。
+            代码：function distinct(arr){
+                arr=arr.sort();
+                let NewArr=[arr[0]];
+                for(let i=1;i<length;i++){
+                    arr[i]!==arr[i-1]&&NewArr.push(arr[i]);
+                }
+                return NewArr;
+            }
+        2).ES6新增Set结构，不允许重复。可以
