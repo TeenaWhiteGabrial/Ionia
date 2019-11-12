@@ -244,4 +244,42 @@
             1).客户端想断开连接了，发送FIN=1，seq=u 的包到服务器;
             2).服务器接收到请求了，但是还有报文没发完，先回一个 ACK=1,seq=v,ackNum=u+1给浏览器表示收到了请求;
             3).服务器的报文发完了，发送FIN=1,ACK=1,seq=w,ackNum=u+1的包到浏览器；
-            4).浏览器接收到包
+            4).浏览器接收到包,在等待2N的时间之后，关闭连接
+
+24,数组常用方法
+    （1）Array.map(),将数组中的每个元素调用一个提供的函数，结果作为一个新的数组返回，不改变原来数组的值。
+        let arr=[1,2,3,4,5];
+        let newArr=arr.map(x=>x*2);
+    （2）Array.forEach,将数组的每个元素执行传进提供的函数，没有返回值。
+        let arr=[1,2,3,4,5];
+        arr.foreach(x=>x*2);
+    （3）Array.filter()，将所有元素进行判断，将满足条件的元素作为一个新的数组返回,不改变原数组。
+        let arr=[1,2,3,4,5];
+        const isBigEnough=>value=>value>=3;
+        let newArr=arr.filter(isBigEnough);
+    （4）Array.sort(),对字符串进行排序，是对字母的字符编码的顺序进行排序。两个参数x、y。
+    （5）Array.every(),此方法是将所有元素进行一个表达式判断并返回一个布尔值，如果所有元素都满足条件，则返回true，泛指则返回false。
+            let arr=[1,2,3,4,5];
+            const isLessThan4=>x=>x<4;
+            const isLessThan6=>x=>x<6;
+            arr.every(isLessThan4);//false
+            arr.every(isLessThan6);//true
+    （6）Array.some(),与Array.every类似，存在元素即返回true。
+    （7）Array.reduce(),所有元素调用返回哈函数，返回值为最终结果，传入的值必须是函数类型。
+            let arr=[1,2,3,4,5];
+            const add=>(a,b)=>a+b
+            let result=arr.reduce(add);//值为1+2+3+4+5
+        与之类似的方法还有一个Array.reduceRight,区别在于是从右边操作的
+    （8）Array.push()，在数组后面添加元素，返回数组长度;
+    （9）Array.pop(),删除数组的最后一个元素并返回数组长度;
+    （10）Array.shift(),删除数组的第一个元素并返回数组长度;
+    （11）Array.unshift(),删除数组的第一个元素并在开头插入一个或若干个元素并返回新数组的长度，改变原数组;
+        let arr=[1,2,3,4,5];
+        let newArr=arr.unshift(6,7);//6,7,2,3,4,5
+    （12）Array.concat(),合并一个或多个数组
+        
+25,箭头函数,使用箭头定义的函数
+    (1),相当于匿名函数，简化了函数定义。箭头函数有两种定义，一种是只有一个表达式，可以省略 {...}和return以及';';另一种是不止一个表达式，此时{}和return 都不能省略。
+    (2),如果参数不是一个，就需要用括号()括起来。
+    (3),如果要使用单表达式返回一个对象，则必须在对象两边加括号：x=>({x:x})，因为与{}的语法有冲突。
+    (4),箭头函数与匿名函数的最大不同点在于this指向的问题，箭头函数的this始终指向创建它的对象;
