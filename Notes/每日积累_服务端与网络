@@ -22,4 +22,34 @@
         一定时间内保存在服务器上，当访问增多，会占用服务器的性能，保存的是对象
     SessionStorage和localstorage仅在本地保存，其中SessionStorage仅在当前浏览器窗口关闭之前有效，而local在浏览器关闭后也始终有效。
     页面JS数据对象在页面刷新后或转到另一页面就不存在了。
+5,前端持久化的方式、区别
+    1).标准HTTP cookie，存放在document cookie中;
+    2).Flash Cookie,将数据存放在flash的本地对象中;
+    3).localStorage,本地化存储，不手动删除则永远存在,
+    4).IndexedDB,浏览器内置的数据库，永久保存数据，键值对存储，NOSQL,异步，支持事务，同源限制，存储空间大。
+6,CDN：内容分发网络，在客户端和浏览器之间加一个缓存机制，通过这个缓存机制动态获取IP地址根据地理位置，让用户到最近的服务器访问，储存html、css、js等静态资源。
+  负载均衡：将特定的业务分担给多个服务器，提高业务处理能力，保证业务的高可用性。
+7,非同源限制:
+    1).无法读取非同源网页的cookie、Localstorage、IndexedDB;
+    2).无法接触非同源网页的DOM;
+    3).无法向非同源网页发送AJAX请求
+8,跨域解决方案
+    1).使用document.domain，设置为同一个主域名，可以跨域访问(限制同一个主域名);
+    2).跨文档通信API，window.postMessage()，可以实现父窗口与其打开的子窗口之间相互发消息;
+        发送：
+            var openWindow=window.open('http://test2.com','title');
+            openWindow.postMessage('Nice To Meet You','http://test.com');
+
+        接收：
+            window.addEventListener('Message',function(){
+                e.source;//发送消息的窗口
+                e.origin;//消息发向的网址
+                e.data;//消息内容
+            },false)
+    3).JSONP,兼容性好，缺点是只支持get，不支持post。核心思想是通过添加一个<scripts>元素，向服务器请求JSON数据，服务器收到请求后，将数据放到指定名字的回调函数的参数位置传回来。
+    4).CORS,跨域AJAX请求的根本解决方法
+        服务端设置：Access-Control-Allow-Origin;
+        浏览器：如果不带cookie不需要设置，如果带cookie需要设置xhr.withCredentials为true
+
+    
     
