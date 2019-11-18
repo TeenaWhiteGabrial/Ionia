@@ -211,7 +211,80 @@
                 var SingleA=Single.getSingle("aaa");
                 var SingleB=Single.getSingle("bbb");
     （2）观察者模式：对象间的一对多的依赖关系。
-            需求：当一个对象的状态发生变化时，所有依赖于他的对象都将得到通知；
+            需求：当一个对象的状态发生变化时，所有依赖于他的对象都将得到通知;
+            实现：
+            代码：  
+                var ObserverEvent = (function () {
+                    var clientList = [], listen, trigger, remove;//Listen,添加方法;trigger，执行列表中的所有方法;
+                    listen = function (key, fn) {
+                        if (!clientList[key]) {
+                            clientList[key] = [];
+                        }
+                        clientList[key].push(fn);
+                    };
+                    trigger = function () {
+                        var key = Array.prototype.shift.call(arguments), fns = clientList[key];
+                        if (!fns || fns.length === 0) {
+                            return false;
+                        }
+                        for (var i = 0, fn; fn = fns[i++];) {
+                            fn.apply(this, arguments);
+                        }
+                    };
+                    remove = function (key, fn) {
+                        var fns = clientList[key];
+                        if (!fns) {
+                            return false;
+                        }
+                        if (!fn) {
+                            fns && (fns.length = 0);
+                        } else {
+                            for (var l = fns.length - 1; l >= 0; l--) {
+                                var _fn = fns[l];
+                                if (_fn === fn) {
+                                    fns.splice(l, 1);
+                                }
+                            }
+                        }
+                    };
+                    return {
+                        listen:listen,
+                        trigger:trigger,
+                        remove:remove
+                    }
+                })();
+                ObserverEvent.listen('squareMeter88', fn1 = function (price) {
+                    console.log('价格=' + price);
+                });
+                ObserverEvent.listen('squareMeter100', function (price) {
+                    console.log('价格=' + price);
+                });
+                ObserverEvent.trigger('squareMeter88', 200000);
+
+                //刷新模块信息
+                var header = (function () {
+                        ObserverEvent.listen('loginSucc', function (data) {
+                            header.setAvatar(data.avatar);
+                        });
+                        return {
+                            setAvatar: function (data) {
+                                console.log(data + "设置header成功");
+                            }
+                        }
+                })();
+                var nav = (function () {
+                    ObserverEvent.listen('loginSucc', function (data) {
+                        nav.setAvatar(data.avatar)
+                    });
+                    return {
+                        setAvatar: function (data) {
+                            console.log(data + '设置nav成功');
+                        }
+                    }
+                })();
+                var data = {};
+                data.avatar = "参数";
+                ObserverEvent.trigger('loginSucc', data);
 23,iframe的缺点
     （1）
 24,数组问题
@@ -225,7 +298,7 @@
                 }
                 return NewArr;
             }
-        2).ES6新增Set结构，不允许重复。可以
+        2).ES6新增Set结构，不允许重复。可以做数组去重
 
 
 23,从URL回车到页面加载完成
