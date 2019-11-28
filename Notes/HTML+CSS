@@ -85,10 +85,17 @@
     层叠顺序：
         Z-index值为正>Z-index值为0>正常流式布局中的inline-block元素>浮动元素>正常流式布局>负Z-index>背景与边框
 
-10 
-3 CSS选择器有哪些？哪些属性可以继承？
-
-    CSS选择符：id选择器(#myid)、类选择器(.myclassname)、标签选择器(div, h1, p)、相邻选择器(h1 + p)、子选择器（ul > li）、后代选择器（li a）、通配符选择器（*）、属性选择器（a[rel=”external”]）、伪类选择器（a:hover, li:nth-child）
+10 CSS选择器有哪些？哪些属性可以继承？
+    CSS选择符：
+        ID选择器(#myid)
+        类选择器(.myclassname)
+        标签选择器(div,h1,p)
+        相邻选择器(h1+p)
+        子选择器(ul>li)
+        后代选择器(li a)
+        通配符选择器(*)
+        属性选择器(a[rel=”external”)
+        伪类选择器(div:after)
 
     可继承的属性：font-size, font-family, color
 
@@ -96,6 +103,8 @@
 
     优先级（就近原则）：!important > [ id > class > tag ]
     !important 比内联优先级高
+11 居中一个div
+
 
 4 CSS优先级算法如何计算？
 
@@ -144,15 +153,6 @@ div：
     left: 0;
     right: 0; 
 还有更加优雅的居中方式就是用flexbox，我以后会做整理。
-
-7 display有哪些值？说明他们的作用?
-
-inline（默认）–内联
-none–隐藏
-block–块显示
-table–表格显示
-list-item–项目列表
-inline-block
 
 8 position的值？
 
@@ -365,7 +365,7 @@ overflow：hidden；transition：all 1000ms ease；
 基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理。
 页面头部必须有meta声明的viewport。
 
-1
+31
 <meta name="’viewport’" content="”width=device-width," initial-scale="1." maximum-scale="1,user-scalable=no”"/>
 32 视差滚动效果？
 

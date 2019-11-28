@@ -60,6 +60,11 @@
     字符串等：let[a,b,c,d,e]='hello';
     解构默认值：let [a=2] =[undefined];//默认值
         let [a=3,b=a]=[1,2];
+
+10，Symbol，表示独一无二的值，最大的用法是用来定义对象的唯一属性名;
+
+    
+
 10、声明类与继承：class、extend
 
 

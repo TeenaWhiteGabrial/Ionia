@@ -1,0 +1,13 @@
+1.渲染上下文
+    var canvas=document.getElementById('myCanvas');
+    var ctx=canvas.getContext('2d');
+2.检测支持性
+    if(!canvas.getContext) return;
+3.填充：filestyle。value:color、gradient、pattern
+    线性渐变：createLinearGradient(x0,y0,x1,y1);
+    放射渐变：createrRadialGradient(x0,y0,r0,x1,y1,r1)
+    颜色和位置：addColorStop(stop,color);
+    元素重复：createPattern(image,"repeat-x");
+4.绘制矩形：fillRect，可配合fillStyle使用
+    fillRect(x,y,width,height)
+    

@@ -288,7 +288,7 @@
 23,iframe的缺点
     （1）
 24,数组问题
-    （1）数组去重：
+    (1)数组去重：
         1).先使用Array.sort()将数组排序，再比较相邻的两个元素，如果不相同则去除掉。
             代码：function distinct(arr){
                 arr=arr.sort();
@@ -299,6 +299,12 @@
                 return NewArr;
             }
         2).ES6新增Set结构，不允许重复。可以做数组去重
+    (2).扁平化数组
+        1).使用reduce
+        2).使用数组的tostring()和split
+        3).使用join和split
+        4).使用递归
+        5).使用扩展运算符做递归
 
 
 23,从URL回车到页面加载完成
@@ -372,3 +378,20 @@
     (3)  ,如果要使用单表达式返回一个对象，则必须在对象两边加括号：x=>({x:x})，因为与{}的语法有冲突。
     (4),箭头函数与匿名函数的最大不同点在于this指向的问题，箭头函数的this始终指向创建它的对象;
 
+26,BOM
+    浏览器对象模型，是浏览器在创建页面的时候创建的一个全局变量，用于描述当前窗口的属性和状态，核心对象是window。window包含了6大核心模块
+    window:
+        1).window.innerheight:浏览器窗口的高度;
+        2).window.innerweight:浏览器窗口的宽度;
+        3).window.OpenUrl(),打开新窗口
+        4).window.close(),关闭当前窗口
+        5).window.moveTo(),移动窗口到特定位置
+        6).window.resizeTo(),修改窗口大小
+    document：文档对象，HTML文档的根节点        
+    frames:制度元素，返回一个类数组对象，内容是当前页面的iframe
+    history:浏览器的历史记录，JS代码访问需要授权。location.replace():更新会话历史中的当前页面地址
+    location:获取当前页面地址以及重定向到一个新的页面。
+        1).window.location.href:当前页面的地址
+        2).
+    navigator:
+    screen:
